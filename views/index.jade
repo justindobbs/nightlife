@@ -1,0 +1,70 @@
+extends layout
+
+block content
+	span#browser-sync-binding
+	template#app(is="dom-bind")
+		paper-drawer-panel#paperDrawerPanel
+			paper-scroll-header-panel(drawer fixed)
+				paper-toolbar#drawerToolBar
+					span(class="paper-font-title")  Menu
+				paper-menu(class="list" attr-for-selected="data-route" on-iron-select="onMenuSelect")
+					a(data-route="home" href="/")
+						iron-icon(icon="home")
+						span  
+							|	Home
+					a(data-route="home" href="/users")
+							iron-icon(icon="info")
+							span  
+								|	Users
+					a(data-route="home" href="/contact")
+						iron-icon(icon="mail")
+						span  
+							|	Contact
+			paper-scroll-header-panel(main condenses keep-condensed-header)
+			
+				<!-- Main Toolbar -->
+				paper-toolbar#mainToolbar(class="tall")
+					paper-icon-button#paperToggle(icon="menu" paper-drawer-toggle)
+					span(class="flex")
+					
+					<!-- Toolbar icons -->
+					paper-icon-button(icon="refresh")
+					paper-icon-button(icon="search")
+					
+					<!-- Application name -->
+					div(class="middle middle-container center horizontal layout")
+						div(class="app-name")  Nightlife
+						
+					<!-- Application sub title -->
+					div(class="bottom bottom-container center horizontal layout")
+						div(class="bottom-title paper-font-subhead")	Meet your friends
+				
+				<!-- Main Content -->
+				div(class="content")
+					iron-pages(attr-for-selected="data-route" selected="{{route}}")
+						
+						<!-- Home Route -->
+						
+						section(data-route="home")
+							paper-material(elevation="1")
+								my-greeting
+					
+						<!-- Login Route -->
+						
+						section(data-route="login")
+							paper-material(elevation="3")
+								h3	Complete the form to login
+								form( name='login' method="post" action="/login")
+									paper-input(name="name" label="Name" required)
+									paper-input(type="password" name="password" label="Password" required)
+									br
+									<button type="submit">Native Submit</button>
+									//paper-button(raised onclick="clickHandler(event)") Submit
+						
+						<!-- Users Route -->
+						
+						section(data-route="users")
+							paper-material(elevation="1")
+								span	users
+								
+	script(src="javascripts/app.js")
