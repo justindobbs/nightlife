@@ -8,17 +8,17 @@ var passport = require('passport'),
 
 //collect our routers
 var loginRouter = require('./login');
-var createAccountRouter = require('./createAccount');
+var newAccountRouter = require('./newAccount');
 var appRouter = require('./app');
 
 //apply routes 
 loginRouter(router,passport,flash);
-createAccountRouter(router);
+newAccountRouter(router);
 appRouter(router);
   
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Nightlife' });
+  res.render('index', { title: 'Nightlife', username: req.user ? req.user.username : "" });
 });
 
 

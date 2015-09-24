@@ -15,7 +15,7 @@ var LoginRoute = function(router,passport,flash){
 	
 	/* GET login */
 	router.get('/login', function(req, res, next) {
-		res.render('index', { 
+		res.render('login', { 
 			'title': 'login', 
 			//pass in the flash message (problem logging in)
 			'messages': req.flash('loginMessage') 
@@ -29,10 +29,10 @@ var LoginRoute = function(router,passport,flash){
 
 	/* GET login success */
 	router.get('/loginSuccess', function(req, res, next) {
-		res.location('app');
+		res.location('/');
 		
 		//and forward to success page
-		res.redirect("app");
+		res.redirect("/");
 	});
 
 

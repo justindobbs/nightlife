@@ -11,4 +11,14 @@ body {
   background: #fafafa;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
+	margin: 0;
+	padding: 0;
 }
+
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+

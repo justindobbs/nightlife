@@ -7,6 +7,6 @@
 module.exports = {
 	
 	sessionSecret: process.env.SESSION_SECRET || process.env.npm_package_config_sessionSecret || "secretKitten",
-	mongoUri: process.env.MONGO || process.env.npm_package_config_mongoHost
+	mongoUri: process.env.MONGO
 	
 }

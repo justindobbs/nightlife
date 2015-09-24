@@ -1,70 +1,79 @@
 extends layout
 
 block content
-	span#browser-sync-binding
-	template#app(is="dom-bind")
-		paper-drawer-panel#paperDrawerPanel
-			paper-scroll-header-panel(drawer fixed)
-				paper-toolbar#drawerToolBar
-					span(class="paper-font-title")  Menu
-				paper-menu(class="list" attr-for-selected="data-route" on-iron-select="onMenuSelect")
-					a(data-route="home" href="/")
-						iron-icon(icon="home")
-						span  
-							|	Home
-					a(data-route="home" href="/users")
-							iron-icon(icon="info")
+		span#browser-sync-binding
+		template#app(is="dom-bind")
+			paper-drawer-panel#paperDrawerPanel
+				paper-scroll-header-panel(drawer fixed)
+					paper-toolbar#drawerToolBar
+						span(class="paper-font-title")  Menu
+					paper-menu(selected="{{route}}" class="list" attr-for-selected="data-route" on-iron-select="onMenuSelect")
+						a(data-route="home" href="/")
+							iron-icon(icon="home")
 							span  
-								|	Users
-					a(data-route="home" href="/contact")
-						iron-icon(icon="mail")
-						span  
-							|	Contact
-			paper-scroll-header-panel(main condenses keep-condensed-header)
-			
-				<!-- Main Toolbar -->
-				paper-toolbar#mainToolbar(class="tall")
-					paper-icon-button#paperToggle(icon="menu" paper-drawer-toggle)
-					span(class="flex")
-					
-					<!-- Toolbar icons -->
-					paper-icon-button(icon="refresh")
-					paper-icon-button(icon="search")
-					
-					<!-- Application name -->
-					div(class="middle middle-container center horizontal layout")
-						div(class="app-name")  Nightlife
+								|	Home
+						a(data-route="home" href="/users")
+								iron-icon(icon="info")
+								span  
+									|	Users
+						a(data-route="home" href="/contact")
+							iron-icon(icon="mail")
+							span  
+								|	Contact
+						if username.length
+							a(data-route="you" href="/you")
+								iron-icon(icon="map")
+								span= username
+						else
+							a(data-route="login" href="/login")
+								iron-icon(icon="launch")
+								span  Login
+							a(data-route="newAccount" href="/newAccount")
+								iron-icon(icon="add")
+								span  New Account
 						
-					<!-- Application sub title -->
-					div(class="bottom bottom-container center horizontal layout")
-						div(class="bottom-title paper-font-subhead")	Meet your friends
+				paper-scroll-header-panel(main condenses keep-condensed-header)
 				
-				<!-- Main Content -->
-				div(class="content")
-					iron-pages(attr-for-selected="data-route" selected="{{route}}")
+					<!-- Main Toolbar -->
+					paper-toolbar#mainToolbar(class="tall")
+						paper-icon-button#paperToggle(icon="menu" paper-drawer-toggle)
+						span(class="flex")
 						
-						<!-- Home Route -->
+						<!-- Toolbar icons -->
+						paper-icon-button(icon="refresh")
+						paper-icon-button(icon="search")
 						
-						section(data-route="home")
-							paper-material(elevation="1")
-								my-greeting
+						<!-- Application name -->
+						div(class="middle middle-container center horizontal layout")
+							div(class="app-name")
+								h3  Nightlife
+							
+						<!-- Application sub title -->
+						div(class="bottom bottom-container center horizontal layout")
+							div(class="bottom-title paper-font-subhead")
+								p  A service for meeting up at a bar
 					
-						<!-- Login Route -->
-						
-						section(data-route="login")
-							paper-material(elevation="3")
-								h3	Complete the form to login
-								form( name='login' method="post" action="/login")
-									paper-input(name="name" label="Name" required)
-									paper-input(type="password" name="password" label="Password" required)
-									br
-									<button type="submit">Native Submit</button>
-									//paper-button(raised onclick="clickHandler(event)") Submit
-						
-						<!-- Users Route -->
-						
-						section(data-route="users")
-							paper-material(elevation="1")
-								span	users
-								
-	script(src="javascripts/app.js")
+					<!-- Main Content -->
+					div(class="content")
+						iron-pages(attr-for-selected="data-route" selected="{{route}}")
+							
+							<!-- Home Route -->
+							
+							section(data-route="home")
+								paper-material(elevation="1")
+									my-greeting
+										
+							<!-- Users Route -->
+							
+							section(data-route="users")
+								paper-material(elevation="1")
+									span	users
+							
+							<!-- Contact Route -->
+							
+							section(data-route="contact")
+								paper-material(elevation="1")
+									span	contact
+									
+		script(src="javascripts/app.js")
+	

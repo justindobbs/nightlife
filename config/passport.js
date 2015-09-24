@@ -5,7 +5,6 @@ var flash = require('connect-flash');
 var passwordHash = require('password-hash-and-salt');
 
 module.exports = function (passport,db) {
-		
 	passport.serializeUser(function(user, done) {
 		done(null, user);
 	});
@@ -20,7 +19,6 @@ module.exports = function (passport,db) {
 		},
 		function(req, username, password, done) {
 			var Users = db.get('users');
-			
 			// asynchronous
 			process.nextTick(function() {
 				Users.findOne({ 'username' :  username }, function(err, user) {
