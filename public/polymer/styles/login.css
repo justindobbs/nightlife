@@ -1,0 +1,23 @@
+body{
+	background: #444;
+}
+
+.login-box{
+	position: relative;
+	width: 300px;
+	top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.login-box h2{
+	color: lavender;
+	text-align: center;
+}
+
+button{
+	padding:.5em;
+	background: black;
+	color: white;
+}
+

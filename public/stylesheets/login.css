@@ -1,0 +1,13 @@
+.login-box{
+	position: relative;
+	background: black;
+	width: 300px;
+	height: 300px;
+	padding: 10px;
+}
+
+button{
+	padding:1em;
+	background: black;
+	color: white;
+}
