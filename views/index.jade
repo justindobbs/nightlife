@@ -24,6 +24,9 @@ block content
 							a(data-route="you" href="/you")
 								iron-icon(icon="map")
 								span= username
+							a(data-route="you" href="/logout")
+								iron-icon(icon="settings-power")
+								span  Logout
 						else
 							a(data-route="login" href="/login")
 								iron-icon(icon="launch")
@@ -61,8 +64,8 @@ block content
 							
 							section(data-route="home")
 								paper-material(elevation="1")
-									my-greeting
-										
+									my-greeting									
+									
 							<!-- Users Route -->
 							
 							section(data-route="users")
@@ -76,4 +79,3 @@ block content
 									span	contact
 									
 		script(src="javascripts/app.js")
-	

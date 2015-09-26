@@ -8,7 +8,14 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item/.html">
+<link rel="import" href="../../bower_components/paper-item-body/paper-item-body.html">
+
 <dom-module id="my-greeting">
+	
   <style>
     :host {
       display: block;
@@ -19,17 +26,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 24px;
       }
     }
+    .green {
+      background-color: var(--paper-green-300);
+    }
   </style>
-  <template>
-    <h1 class="paper-font-display1"><span>{{greeting}}</span></h1>
-    <span class="paper-font-body2">Update text to change the greeting.</span>
-    <!-- Listens for "input" event and sets greeting to <input>.value -->
-    <input class="paper-font-body2" value="{{greeting::input}}">
-  </template>
+	<template id='app'>
+			
+		<iron-ajax 
+			auto
+			id='ajax'
+			url="../../../json/yelp_mockup.json"
+			handle-as="json"
+			params="{{ajaxParams}}"
+			on-response="response"
+			method="GET"
+		</iron-ajax>
 
+		<h1 class="paper-font-display1"><span>{{greeting}}</span></h1>
+    <span class="paper-font-body2">Enter your location to find bars near you.</span>
+    <input class="paper-font-body2" placeholder="city">
+		
+		<template is="dom-repeat" items="[[place]]">
+			<div>[[item.data.name]]</div>
+			 <div class="list short">
+        <paper-icon-item>
+          <div class="avatar orange" item-icon></div>
+          <div class="flex">Lorem</div>
+          <paper-checkbox></paper-checkbox>
+        </paper-icon-item>
+      </div>
+		</template>
+  	
+	</template>
   <script>
-    (function() {
-      Polymer({
+		(function() {
+			Polymer({
         is: 'my-greeting',
 
         properties: {
@@ -37,8 +68,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             value: 'Welcome!',
             notify: true
-          }
-        }
+          },
+					place: {
+						type: Array,
+						notify: true
+					},
+					data: {
+						type: String,
+						value: 'children'
+					},
+					ajaxParams: {
+						type: String,
+						computed: 'processParams(kind)'
+					}
+				},
+				processParams: function(kind){
+					return {data:data};					
+				},
+				response: function(e){
+					//console.log(e.detail.response);
+					//console.log(this.$.ajax.lastResponse);
+					this.place = e.detail.response.data.children;
+				}
       });
     })();
   </script>

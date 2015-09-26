@@ -1,0 +1,26 @@
+{
+	"kind": "Listing",
+	"data": {
+		"modhash": "",
+		"children": [
+			{
+				"kind": "t3",
+				"data": {
+				 "name": "brainyquote.com",
+				 "img_url": null,
+				 "media_embed": {},
+				 "subreddit": "worldpolitics"
+				}
+			},
+			{
+				"kind": "t3",
+				"data": {
+				 "name": "brainyquote.com",
+				 "img_url": null,
+				 "media_embed": {},
+				 "subreddit": "worldpolitics"
+				}
+			}
+		]
+	}
+}
