@@ -25,14 +25,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       background-color: white;
       display: inline-block;
       width: 100%;
-      //height: 228px;
       margin-top:12px;
       @apply(--shadow-elevation-2dp);
     }
 
     .short {
       padding-top: 12px;
-      //height: 216px;
     }
 
     h4 {
@@ -76,11 +74,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<paper-material class='material' elevation="1">		
 			<h1 class="paper-font-display1"><span>{{greeting}}</span></h1>
 			<span class="paper-font-body2">Enter your location to find bars near you.</span>
-			<input class="paper-font-body2" placeholder="city">
+			<input on-keypress="input" class="paper-font-body2" placeholder="city">
 		</paper-material>
+		<h4>{{location}}</h4>
 		<template is="dom-repeat" items="[[place]]">
+				
 			 <div class="list short">
         <h4>[[item.data.name]]</h4>			
+			
 				<paper-icon-item>	
           <div class="avatar orange" item-icon></div>
           <div class="flex">Lorem</div>
@@ -105,6 +106,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Array,
 						notify: true
 					},
+					location: {
+						type: String,
+						value: "seattle"
+					},
 					data: {
 						type: String,
 						value: 'children'
@@ -115,12 +120,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					}
 				},
 				processParams: function(kind){
-					return {data:data};					
+					var that = this;
+					return {location:that.location};					
 				},
 				response: function(e){
 					//console.log(e.detail.response);
 					//console.log(this.$.ajax.lastResponse);
 					this.place = e.detail.response.data.children;
+				},
+				input: function(e){
+					if(e.which === 13){
+						this.location = e.target.value.toLowerCase();
+					}
 				}
       });
     })();
