@@ -6,6 +6,10 @@ module.exports = function(){
 	return {
 		"_id": 1,
 		"username": "user",
-		"password": "password"
+		"email": "email",
+		"password": "password",
+		"searchTerms": [],
+		"goingCurrent": [],
+		"goingHistory": []
 	};
 }

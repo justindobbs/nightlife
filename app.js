@@ -14,12 +14,12 @@ var express = require('express'),
 	LocalStrategy = require('passport-local').Strategy,
 	env = require('./config/env');
 	
-//mongo/monk/mongoLab
+//configure mongo/monk/mongoLab
 var monk = require('monk'),
 	mongoUri = env.mongoUri || '127.0.0.1:27017/nightlife',
 	db = monk(mongoUri);
 
-//passport
+//configure passport
 require('./config/passport')(passport,db);
 
 //routes	

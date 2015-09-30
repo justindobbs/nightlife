@@ -68,7 +68,9 @@ var newAcountRoute = function(router){
 					"username": userName,
 					"email": userEmail,
 					"password": userPassword,
-					"polls": []
+					"goingCurrent": [],
+					"goingHistory": [],
+					"searchTerms": []
 				}, function (err,doc) {
 					if (err) {
 						res.send("There was a problem adding to database.");

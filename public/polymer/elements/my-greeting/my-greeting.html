@@ -12,25 +12,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
 <dom-module id="my-greeting">
 	
   <style>
+		
 		.material{
 			padding: 20px;
-			width: 95%;
+			width: 98%;
 		}
+		
 		.list {
-      padding-top: 12px;
+      padding: 4px;
       background-color: white;
       display: inline-block;
       width: 100%;
       margin-top:12px;
       @apply(--shadow-elevation-2dp);
     }
+		
+		@media (max-width:600px){
+			.list{
+				width: 90%;
+			}
+		}
 
     .short {
-      padding-top: 12px;
+      //padding-top: 12px;
     }
 
     h4 {
@@ -63,52 +72,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<template id='app'>
 			
 		<iron-ajax 
-			auto
 			id='ajax'
 			url="../../../json/yelp_mockup.json"
 			handle-as="json"
 			params="{{ajaxParams}}"
-			on-response="response"
+			on-response="ajaxResponse"
 			method="GET"
 		</iron-ajax>
+		
+		<iron-ajax
+			id='post'
+			method="POST"
+			url="/increment"
+			body=""
+			on-response="postResponse"
+		</iron-ajax>
+		
 		<paper-material class='material' elevation="1">		
 			<h1 class="paper-font-display1"><span>{{greeting}}</span></h1>
 			<span class="paper-font-body2">Enter your location to find bars near you.</span>
 			<input on-keypress="input" class="paper-font-body2" placeholder="city">
 		</paper-material>
-		<h4>{{location}}</h4>
-		<template is="dom-repeat" items="[[place]]">
-				
-			 <div class="list short">
-        <h4>[[item.data.name]]</h4>			
-			
-				<paper-icon-item>	
-          <div class="avatar orange" item-icon></div>
-          <div class="flex">Lorem</div>
-          <paper-checkbox></paper-checkbox>
-        </paper-icon-item>
-      </div>
-		</template>
+		
+		<div class='material'>
+		
+			<template is="dom-repeat" items="[[bar]]">		
+				 <div class="list short">
+					<paper-icon-item>	
+						<div class="avatar orange" item-icon></div>
+						<div class="flex"><a href="">[[item.data.name]]</a></div>
+						<paper-button data-name="[[item.data.name]]" raised on-click="setIncrement">
+							<span data-name="[[item.data.name]]">Going </span>
+							<span data-name="[[item.data.name]]">[[increment]]</span>
+						</paper-button>
+					</paper-icon-item>
+				</div>
+			</template>
+		
+		</div>
   	
 	</template>
-  <script>
+  
+	<script>
 		(function() {
 			Polymer({
         is: 'my-greeting',
-
         properties: {
+					username: {
+						type: String,
+						value: ""
+					},
           greeting: {
             type: String,
             value: 'Welcome!',
             notify: true
           },
-					place: {
+					username: {
+						type: String,
+						notify: false
+					},
+					bar: {
 						type: Array,
 						notify: true
 					},
 					location: {
 						type: String,
 						value: "seattle"
+					},
+					increment: {
+						type: String,
+						value: 0
 					},
 					data: {
 						type: String,
@@ -123,15 +156,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					var that = this;
 					return {location:that.location};					
 				},
-				response: function(e){
-					//console.log(e.detail.response);
-					//console.log(this.$.ajax.lastResponse);
-					this.place = e.detail.response.data.children;
+				ajaxResponse: function(e){
+					console.log(this.$.ajax.lastResponse);
+					if(e.detail.response.data.children){
+						this.bar = e.detail.response.data.children;
+					}
+				},
+				postResponse: function(e){
+					console.log(e.detail.response);
 				},
 				input: function(e){
 					if(e.which === 13){
 						this.location = e.target.value.toLowerCase();
+						var ajax = document.querySelector('#ajax');
+						ajax.generateRequest();
 					}
+				},
+				setIncrement: function(e){
+					if(!this.username.length){
+						window.location = '/login';
+						return false;
+					}
+					console.log(e.target.parentElement.dataName);
+					console.log(e.target.dataName);
+					var dataName = e.target.dataName || e.target.parentElement.dataName
+					var ajax = document.querySelector('#post');
+					var username = this.username;
+					this.setBody.call(this,ajax,dataName,username);
+					ajax.generateRequest();
+				},
+				setBody: function(ajax,dataName,username){
+					ajax.body = 'name=' + dataName 
+						+ '&location=' + dataName 
+						+ '&user=' + username;
 				}
       });
     })();

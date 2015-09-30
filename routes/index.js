@@ -10,8 +10,11 @@ var passport = require('passport'),
 var loginRouter = require('./login');
 var newAccountRouter = require('./newAccount');
 var appRouter = require('./app');
+var incrementRouter = require('./incrementRoute');
 
 //apply routes 
+incrementRouter(router);
+
 loginRouter(router,passport,flash);
 newAccountRouter(router);
 appRouter(router);
